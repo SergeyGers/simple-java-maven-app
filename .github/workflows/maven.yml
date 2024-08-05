@@ -30,7 +30,7 @@ jobs:
         sudo ln -s /opt/maven/bin/mvn /usr/bin/mvn
         mvn -v
 
-    - name: Determine new version
+    - name: Determine new version!
       id: version
       run: |
         BASE_VERSION="1.0"
