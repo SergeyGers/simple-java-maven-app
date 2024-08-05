@@ -33,20 +33,16 @@ jobs:
     - name: Determine new version
       id: version
       run: |
-        # Define the base version and starting patch number
         BASE_VERSION="1.0"
         PATCH=0
-        
-        # Fetch the latest tag that matches the base version
-        LATEST_TAG=$(git tag -l "${BASE_VERSION}.*" | sort -V | tail -n 1)
-        
-        if [ -n "$LATEST_TAG" ]; then
-          # Extract the patch number from the latest tag
-          PATCH=$(echo "$LATEST_TAG" | awk -F. '{print $3}')
-          PATCH=$((PATCH + 1))
-        fi
-        
-        NEW_VERSION="${BASE_VERSION}.${PATCH}"
+        while true; do
+          NEW_VERSION="${BASE_VERSION}.${PATCH}"
+          if git rev-parse "refs/tags/${NEW_VERSION}" >/dev/null 2>&1; then
+            PATCH=$((PATCH + 1))
+          else
+            break
+          fi
+        done
         echo "New version: $NEW_VERSION"
         echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
