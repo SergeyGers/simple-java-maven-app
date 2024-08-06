@@ -29,8 +29,8 @@ jobs:
         wget https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz
         tar -xvzf apache-maven-$MAVEN_VERSION-bin.tar.gz
         sudo mv apache-maven-$MAVEN_VERSION /opt/maven
-        if [ -L /usr/bin/mvn]; then sudo rm /usr/bin/mvn; fi
-        sudo ln -s /opt/maven/bin/mvn /usr/bin/mvn
+        if [ -L /usr/bin/mvn ]; then sudo rm /usr/bin/mvn; fi
+        sudo ln -sfn /opt/maven/bin/mvn /usr/bin/mvn
         mvn -v
 
     - name: Determine new version
