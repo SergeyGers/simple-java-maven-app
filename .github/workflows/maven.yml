@@ -80,7 +80,7 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@3.91.249.245 << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@3.91.249.245 << 'EOF'
           docker pull ${{ secrets.DOCKER_USERNAME }}/simple-java-maven-app:${{ env.VERSION }}
           docker stop simple-java-maven-app || true
           docker rm simple-java-maven-app || true
